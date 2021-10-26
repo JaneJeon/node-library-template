@@ -1,0 +1,34 @@
+{
+  "name": "fill-this-in-here",
+  "version": "0.1.0",
+  "description": "Fill in this description",
+  "main": "index.js",
+  "repository": "JaneJeon/node-library-template",
+  "author": "Jane Jeon <me@janejeon.dev>",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "test": "jest",
+    "lint": "run-s lint:*",
+    "lint:prettier": "prettier --check .",
+    "lint:eslint": "eslint ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@janejeon/eslint-config": "^2.2.0",
+    "@janejeon/prettier-config": "^1.1.0",
+    "husky": "^4.3.8",
+    "jest": "^27.3.1",
+    "jest-junit": "^13.0.0",
+    "lint-staged": "^11.2.5",
+    "npm-run-all": "^4.1.5",
+    "skip-ci": "^1.0.4"
+  },
+  "prettier": "@janejeon/prettier-config",
+  "eslintConfig": {
+    "extends": "@janejeon"
+  },
+  "keywords": [
+    "hello",
+    "world"
+  ]
+}
