@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@janejeon/eslint-config": "^2.2.0",
-    "@janejeon/prettier-config": "^1.1.0",
+    "@janejeon/prettier-config": "^1.1.1",
     "husky": "^4.3.8",
     "jest": "^27.4.5",
     "jest-junit": "^13.0.0",
