@@ -12,7 +12,6 @@
     "lint:prettier": "prettier --check .",
     "lint:eslint": "eslint ."
   },
-  "dependencies": {},
   "devDependencies": {
     "@janejeon/eslint-config": "^2.2.0",
     "@janejeon/prettier-config": "^1.1.0",

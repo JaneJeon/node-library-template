@@ -1,0 +1,54 @@
+version: 2.1
+
+aliases:
+  - &runner
+    executor:
+      name: node/default
+      tag: lts
+  - &size
+    resource_class: small
+
+orbs:
+  node: circleci/node@4
+  slack: circleci/slack@4
+
+jobs:
+  lint:
+    <<: *runner
+    <<: *size
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm run lint:prettier
+      - run: npm run lint:eslint -- --format junit --output-file reports/eslint/results.xml
+      - &retrieve-junit
+        store_test_results:
+          path: reports
+  test:
+    <<: *runner
+    <<: *size
+    parameters:
+      node-version:
+        type: string
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm test -- --ci
+      - *retrieve-junit
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+
+workflows:
+  build:
+    jobs:
+      - lint
+      - test:
+          context: shared-vars
+          requires:
+            - lint
+          matrix:
+            parameters:
+              node-version:
+                - lts
+                - current
