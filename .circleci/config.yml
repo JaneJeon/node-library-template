@@ -11,6 +11,7 @@ aliases:
 orbs:
   node: circleci/node@4
   slack: circleci/slack@4
+  codecov: codecov/codecov@3
 
 jobs:
   lint:
@@ -21,9 +22,6 @@ jobs:
       - node/install-packages
       - run: npm run lint:prettier
       - run: npm run lint:eslint -- --format junit --output-file reports/eslint/results.xml
-      - &retrieve-junit
-        store_test_results:
-          path: reports
   test:
     <<: *runner
     <<: *size
@@ -33,16 +31,16 @@ jobs:
     steps:
       - checkout
       - node/install-packages
-      - run: npm test -- --ci
-      - *retrieve-junit
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
+      - run: npm test -- --ci --coverage
 
 workflows:
   build:
     jobs:
-      - lint
+      - lint:
+          post-steps:
+            - &retrieve-junit
+              store_test_results:
+                path: reports
       - test:
           context: shared-vars
           requires:
@@ -52,3 +50,9 @@ workflows:
               node-version:
                 - lts
                 - current
+          post-steps:
+            - *retrieve-junit
+            - codecov/upload
+            - slack/notify:
+                event: fail
+                template: basic_fail_1
