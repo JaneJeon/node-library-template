@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages
-      - run: npm test -- --ci --coverage
+      - run: npm test -- --ci --coverage # reports automatically generated
 
 workflows:
   build:
@@ -52,7 +52,7 @@ workflows:
                 - current
           post-steps:
             - *retrieve-junit
-            - codecov/upload
+            - codecov/upload # don't need token for public repos
             - slack/notify:
                 event: fail
                 template: basic_fail_1
