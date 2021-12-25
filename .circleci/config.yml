@@ -3,7 +3,6 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: lts
 
 aliases:
   - &runner
@@ -39,6 +38,7 @@ workflows:
   build:
     jobs:
       - lint:
+          node-version: lts
           post-steps:
             - &retrieve-junit
               store_test_results:
